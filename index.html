@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Имя Фамилия</title>
+    <meta name="description" content="Персональная страница. Помогаю подобрать загородный дом и сопровождаю сделку на каждом этапе.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Hero section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <!--<div class="hero-label">Риелтор по загородной недвижимости</div>-->
+            <h1>Галия Рафикова</h1>
+            <p class="hero-text">Помогаю подобрать загородный дом<br>и сопровождаю сделку<br>на каждом этапе.</p>
+            <div class="hero-links">
+                <a href="#about">Обо мне</a>
+                <span>•</span>
+                <a href="#contacts">Контакты</a>
+            </div>
+        </div>
+        <a href="#about" class="scroll-down"><span></span></a>
+    </header>
+
+    <main>
+        <!-- About section -->
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>Люблю помогать людям находить место, которое однажды они смогут назвать своим домом.</p>
+                        <p>Для меня важно не просто подобрать дом, а понять, каким будет ваше пространство, чтобы оно отражало образ жизни и приносило радость каждый день.</p>
+                        <p>Я рядом на всех этапах — от первой встречи до получения ключей и даже после.</p>
+                        <div class="signature">Галия ♡</div>
+                    </div>
+                    <div class="video-card">
+                        <video controls preload="metadata" poster="assets/avatar.jpg">
+                            <source src="assets/intro.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-caption">Небольшое знакомство<br><span>(1 минута)</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacts section -->
+        <section class="contacts section" id="contacts">
+            <div class="container">
+                <div class="section-title">Выберите удобный способ связи</div>
+                <div class="contact-table">
+                    <!-- Telegram row: personal and channel -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="https://t.me/GaliyaRM"><img src="assets/TG.svg" alt"Telegram" class="icon-svg"></a>
+                            <span class="label">Личный</span>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://t.me/poyushchiy_riyeltor"><img src="assets/TG.svg" alt"Telegram" class="icon-svg"></a>
+                            <span class="label">Канал</span>
+                        </div>
+                    </div>
+                    <!-- VK row: personal only -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="https://vk.ru/ggaliyaaa"><img src="assets/VK.svg" alt"VK" class="icon-svg"></a>
+                            <span class="label">Личный</span>
+                        </div>
+                        <div class="contact-item"></div>
+                    </div>
+                    <!-- Instagram row: profile only -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="https://www.instagram.com/ggaliyaaa?igsh=MXNuMW1iaDBhY3Rzcg=="><img src="assets/Inst.svg" alt"Instagram" class="icon-svg"></a>
+                            <span class="label">Профиль</span>
+                        </div>
+                        <div class="contact-item"></div>
+                    </div>
+                    <!-- WhatsApp row: personal only -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="#"><img src="assets/WhatsApp.svg" alt"WhatsApp" class="icon-svg"></a>
+                            <span class="label">Написать</span>
+                        </div>
+                        <div class="contact-item"></div>
+                    </div>
+                    <!-- MAX row: personal and channel -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="https://max.ru/u/f9LHodD0cOJs8bDot6zWqqM2GcvlNwdci64rHVPTE4IN353moFvcKbAG3RU"><img src="assets/Max.svg" alt"Max" class="icon-svg"></a>
+                            <span class="label">Личный</span>
+                        </div>
+                        <div class="contact-item">
+                            <a href="https://max.ru/join/ddmcGefDdcCne6kcfyZMojwchwaM86nWZzn8vzOJphY"><img src="assets/Max.svg" alt"Max" class="icon-svg"></a>
+                            <span class="label">Канал</span>
+                        </div>
+                    </div>
+                    <!-- Телефон row: personal only -->
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <a href="tel:+79613612350"><img src="assets/Call.svg" alt"Call" class="icon-svg"></a>
+                            <span class="label">Позвонить</span>
+                        </div>
+                        <div class="contact-item"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
