@@ -215,8 +215,10 @@ a {
 
 /* Make the video horizontal (16:9) instead of vertical */
 .video-card video {
-    aspect-ratio: 16 / 9;
+    width:100%;
+    aspect-ratio: 9 / 16;
     object-fit: cover;
+    display:block;
 }
 
 .video-caption {
@@ -426,8 +428,12 @@ a {
         gap: 46px;
     }
     .video-card {
-        max-width: 520px;
-        margin: 0 auto;
+        position: relative;
+        width: 100%;
+        max-width:360px;
+        margin:0 auto;
+        border-radius:24;
+        overflow hidden;
     }
 }
 
