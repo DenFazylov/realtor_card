@@ -196,7 +196,7 @@ a {
 }
 
 .about-text p {
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 }
 
 .signature {
@@ -222,7 +222,7 @@ a {
 }
 
 .video-caption {
-    padding: 22px;
+    padding: 14px 20px;
     text-align: center;
     font-size: 1rem;
 }
