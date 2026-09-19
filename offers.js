@@ -157,6 +157,7 @@
             offers.forEach(item => fragment.appendChild(createOfferCard(item)));
             grid.replaceChildren(fragment);
             section.hidden = false;
+            section.classList.add('show');
         } catch (error) {
             // The offers block stays hidden; the rest of the site keeps working.
             console.warn('Не удалось загрузить актуальные предложения:', error);
