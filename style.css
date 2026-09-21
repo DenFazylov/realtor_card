@@ -1,10 +1,3 @@
-/*
- * Global Stylesheet for the personal portfolio website.
- * This CSS defines the variables, layout, animations and responsive
- * behavior for the entire page. Adjust the values in the :root
- * section to change colors, shadows or other design tokens.
- */
-
 :root {
     --bg: #f7f5f2;
     --surface: #ffffff;
@@ -17,7 +10,6 @@
     --container: 1180px;
 }
 
-/* Reset and base typography */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -48,17 +40,20 @@ a {
     text-decoration: none;
 }
 
+button {
+    font: inherit;
+}
+
 .container {
     width: min(92%, var(--container));
     margin: 0 auto;
 }
 
-/* Sections fade in as you scroll */
 .section {
-    padding: 90px 0;
+    padding: 54px 0;
     opacity: 0;
-    transform: translateY(45px);
-    transition: opacity .8s ease, transform .8s ease;
+    transform: translateY(34px);
+    transition: opacity .7s ease, transform .7s ease;
 }
 
 .section.show {
@@ -66,10 +61,11 @@ a {
     transform: none;
 }
 
-/* Hero section */
+/* Hero */
 .hero {
     position: relative;
     min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -87,7 +83,7 @@ a {
 .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, .60), rgba(0, 0, 0, .28), rgba(0, 0, 0, .12));
+    background: linear-gradient(to top, rgba(0, 0, 0, .66), rgba(0, 0, 0, .30), rgba(0, 0, 0, .12));
 }
 
 .hero-content {
@@ -95,38 +91,92 @@ a {
     z-index: 2;
     width: min(92%, var(--container));
     margin: 0 auto;
-    padding-bottom: 85px;
+    padding: 52px 0 76px;
     color: #fff;
 }
 
-.hero-label {
-    font-size: .82rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: .8;
-    margin-bottom: 18px;
-}
-
 .hero h1 {
-    font-size: clamp(48px, 9vw, 88px);
+    font-size: clamp(46px, 9vw, 88px);
     line-height: 1.05;
     font-weight: 300;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
-/* Hero tagline: smaller font for better hierarchy */
 .hero-text {
     max-width: 520px;
     font-size: 1rem;
-    opacity: .92;
+    opacity: .94;
     font-weight: 400;
 }
 
-.hero-links {
-    margin-top: 42px;
+.hero-contacts {
+    margin-top: 24px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hero-socials {
+    display: flex;
+    gap: 8px;
+}
+
+.quick-contact,
+.hero-phone {
+    background: rgba(255, 255, 255, .14);
+    border: 1px solid rgba(255, 255, 255, .18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background var(--transition), transform var(--transition);
+}
+
+.quick-contact {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.quick-contact img {
+    width: 40px;
+    height: 40px;
+    flex: none;
+}
+
+.hero-phone {
+    min-height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 13px 4px 4px;
+    font-size: .92rem;
+    white-space: nowrap;
+}
+
+.hero-phone img {
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 50%;
+}
+
+.quick-contact:hover,
+.hero-phone:hover {
+    background: rgba(255, 255, 255, .23);
+    transform: translateY(-2px);
+}
+
+.hero-links {
+    margin-top: 26px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: .96rem;
 }
 
 .hero-links span {
@@ -141,31 +191,30 @@ a {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -6px;
+    bottom: -5px;
     width: 0;
     height: 1px;
-    background: white;
-    transition: var(--transition);
+    background: #fff;
+    transition: width var(--transition);
 }
 
 .hero-links a:hover::after {
     width: 100%;
 }
 
-/* Scroll indicator */
 .scroll-down {
     position: absolute;
-    bottom: 28px;
+    bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
 }
 
 .scroll-down span {
-    width: 26px;
-    height: 42px;
+    width: 24px;
+    height: 38px;
     display: block;
-    border: 2px solid rgba(255, 255, 255, .8);
+    border: 2px solid rgba(255, 255, 255, .75);
     border-radius: 30px;
     position: relative;
 }
@@ -174,20 +223,20 @@ a {
     content: "";
     width: 5px;
     height: 5px;
-    background: white;
+    background: #fff;
     border-radius: 50%;
     position: absolute;
     left: 50%;
-    top: 8px;
+    top: 7px;
     transform: translateX(-50%);
     animation: wheel 2s infinite;
 }
 
-/* About section */
+/* About */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 420px;
-    gap: 70px;
+    gap: 58px;
     align-items: center;
 }
 
@@ -195,15 +244,8 @@ a {
     font-size: 1.08rem;
 }
 
-.about-text p {
-    margin-bottom: 10px;
-}
-
-.signature {
-    margin-top: 42px;
-    font-size: 2rem;
-    color: var(--accent);
-    font-weight: 300;
+.about-text p + p {
+    margin-top: 10px;
 }
 
 .video-card {
@@ -213,295 +255,122 @@ a {
     box-shadow: var(--shadow);
 }
 
-/* Make the video horizontal (16:9) instead of vertical */
 .video-card video {
-    width:100%;
+    width: 100%;
     aspect-ratio: 9 / 12;
     object-fit: cover;
-    display:block;
 }
 
 .video-caption {
-    padding: 7px 7px;
+    padding: 8px 10px;
     text-align: center;
-    font-size: 1rem;
+    font-size: .96rem;
 }
 
 .video-caption span {
     color: var(--text-light);
 }
 
-/* Contacts section */
-.contacts {
-    padding-top: 40px;
+/* Shared section headings */
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 24px;
 }
 
 .section-title {
-    font-size: clamp(32px, 5vw, 42px);
+    font-size: clamp(30px, 5vw, 42px);
     font-weight: 300;
     line-height: 1.2;
-    margin-bottom: 42px;
     letter-spacing: -0.02em;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-}
-
-.card {
-    background: var(--surface);
-    border-radius: 24px;
-    padding: 24px 26px;
+/* Carousel */
+.carousel-track {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow);
-    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-    position: relative;
-    overflow: hidden;
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px 14px;
 }
 
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, .10);
+.carousel-track::-webkit-scrollbar {
+    display: none;
 }
 
-.card-left {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+.carousel-arrows {
+    display: none;
+    gap: 8px;
 }
 
-.icon {
-    width: 56px;
-    height: 56px;
+.carousel-arrow {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: #222;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    font-size: .9rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-}
-
-.card h3 {
-    font-size: 1.08rem;
-    font-weight: 600;
-    margin-bottom: 2px;
-}
-
-.card p {
-    color: var(--text-light);
-    font-size: .95rem;
-}
-
-.arrow {
-    font-size: 1.5rem;
-    color: var(--accent);
-    transition: transform var(--transition);
-}
-
-.card:hover .arrow {
-    transform: translateX(6px);
-}
-
-/* New contact table layout: rows with two columns (personal and channel) */
-.contact-table {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-/* Each contact row now contains two equal-width items */
-.contact-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    border: 1px solid rgba(45, 45, 45, .12);
     background: var(--surface);
-    border-radius: 24px;
-    padding: 20px 22px;
-    box-shadow: var(--shadow);
-    transition: transform var(--transition), box-shadow var(--transition);
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+    transition: transform var(--transition), opacity var(--transition), background var(--transition);
 }
 
-.contact-row:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, .10);
+.carousel-arrow:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #f1ede8;
 }
 
-/* Individual contact item: icon + label */
-.contact-item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+.carousel-arrow:disabled {
+    opacity: .3;
+    cursor: default;
 }
 
-.contact-item a {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #222;
-    color: #fff;
+.carousel-dots {
+    min-height: 18px;
+    margin-top: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: .9rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-    position: relative;
-    overflow: hidden;
-    transition: background var(--transition);
+    gap: 8px;
 }
 
-.contact-item a:hover {
+.carousel-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(45, 45, 45, .20);
+    cursor: pointer;
+    transition: width .25s ease, border-radius .25s ease, background .25s ease;
+}
+
+.carousel-dot.is-active {
+    width: 20px;
+    border-radius: 999px;
     background: var(--accent);
 }
 
-.contact-item .label {
-    margin-left: 16px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-}
-
-/* Empty contact items (no channel) still occupy space but are invisible */
-.contact-item:empty {
-    visibility: hidden;
-}
-
-/* Ripple effect */
-/* Ripple effect: apply globally to any element that appends a .ripple span */
-.ripple {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: rgba(182, 144, 99, .18);
-    transform: translate(-50%, -50%) scale(0);
-    pointer-events: none;
-    animation: ripple .6s ease-out;
-}
-
-@keyframes ripple {
-    to {
-        transform: translate(-50%, -50%) scale(22);
-        opacity: 0;
-    }
-}
-
-/* Animations */
-@keyframes wheel {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, 0);
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 16px);
-    }
-}
-
-@keyframes kenburns {
-    from {
-        transform: scale(1);
-    }
-    to {
-        transform: scale(1.08);
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 920px) {
-    .section {
-        padding: 80px 0;
-    }
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 46px;
-    }
-    .video-card {
-        position: relative;
-        width: 100%;
-        max-width:360px;
-        margin:0 auto;
-        border-radius: 24px;
-        overflow: hidden;
-    }
-}
-
-@media (max-width: 640px) {
-    .hero-content {
-        padding-bottom: 92px;
-    }
-    .hero h1 {
-        font-size: 3.15rem;
-    }
-    .hero-text {
-        font-size: 1rem;
-    }
-    .hero-links {
-        margin-top: 34px;
-        font-size: .96rem;
-    }
-    .section {
-        padding: 68px 0;
-    }
-    .about-text {
-        font-size: 1rem;
-    }
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    .card {
-        padding: 20px;
-        border-radius: 22px;
-    }
-    .card:active {
-        transform: scale(.985);
-    }
-    .icon {
-        width: 50px;
-        height: 50px;
-        font-size: .82rem;
-    }
-    .arrow {
-        font-size: 1.3rem;
-    }
-}
-
-@media (min-width: 1440px) {
-    .hero-content {
-        padding-bottom: 110px;
-    }
-    .section {
-        padding: 120px 0;
-    }
-}
-
-/* Current offers */
-.offers[hidden] {
+/* Offers */
+.offers[hidden],
+.reviews[hidden],
+.lightbox[hidden] {
     display: none !important;
 }
 
-.offers-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-}
-
 .offer-card {
+    flex: 0 0 min(82vw, 330px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     min-width: 0;
     background: var(--surface);
-    border-radius: 24px;
+    border-radius: 22px;
     overflow: hidden;
     box-shadow: var(--shadow);
     display: flex;
@@ -510,8 +379,8 @@ a {
 }
 
 .offer-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, .10);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 34px rgba(0, 0, 0, .10);
 }
 
 .offer-media {
@@ -542,37 +411,37 @@ a {
 }
 
 .offer-body {
-    padding: 20px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
 .offer-title {
-    font-size: 1.08rem;
+    font-size: 1.04rem;
     font-weight: 600;
     line-height: 1.35;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 
 .offer-price {
-    font-size: 1.16rem;
+    font-size: 1.14rem;
     font-weight: 600;
     color: var(--accent);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .offer-button {
     margin-top: auto;
-    min-height: 48px;
+    min-height: 44px;
     border-radius: 999px;
     background: #222;
     color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
-    font-size: .96rem;
+    padding: 10px 18px;
+    font-size: .94rem;
     font-weight: 500;
     transition: background var(--transition), transform var(--transition);
 }
@@ -585,14 +454,265 @@ a {
     transform: scale(.985);
 }
 
-@media (min-width: 700px) {
-    .offers-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+/* Reviews */
+.review-card {
+    flex: 0 0 min(78vw, 300px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    border: 0;
+    padding: 0;
+    background: var(--surface);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: zoom-in;
+    aspect-ratio: 3 / 4;
+}
+
+.review-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(20, 20, 20, .84);
+}
+
+.lightbox-image {
+    width: auto;
+    max-width: min(94vw, 980px);
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 14px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+body.lightbox-open {
+    overflow: hidden;
+}
+
+/* Footer */
+.site-footer {
+    padding: 28px 0 34px;
+    color: var(--text-light);
+    border-top: 1px solid rgba(45, 45, 45, .08);
+}
+
+.footer-contacts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+}
+
+.footer-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .86rem;
+    transition: color var(--transition);
+}
+
+.footer-contact:hover {
+    color: var(--text);
+}
+
+.footer-contact img {
+    width: 24px;
+    height: 24px;
+    flex: none;
+    border-radius: 50%;
+    opacity: .72;
+}
+
+/* Animations */
+@keyframes wheel {
+    0% { opacity: 0; transform: translate(-50%, 0); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, 14px); }
+}
+
+@keyframes kenburns {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+}
+
+/* Tablet */
+@media (max-width: 920px) {
+    .section {
+        padding: 48px 0;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .video-card {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
     }
 }
 
-@media (min-width: 1050px) {
-    .offers-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Mobile */
+@media (max-width: 640px) {
+    .hero-content {
+        padding: 40px 0 70px;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-text {
+        font-size: .98rem;
+    }
+
+    .hero-contacts {
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .quick-contact {
+        width: 38px;
+        height: 38px;
+    }
+
+    .quick-contact img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hero-phone {
+        min-height: 38px;
+        font-size: .88rem;
+        padding-right: 11px;
+    }
+
+    .hero-phone img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hero-links {
+        margin-top: 22px;
+        gap: 10px;
+        font-size: .91rem;
+    }
+
+    .hero-links span {
+        font-size: .75rem;
+    }
+
+    .section {
+        padding: 42px 0;
+    }
+
+    .about-text {
+        font-size: 1rem;
+    }
+
+    .section-heading {
+        margin-bottom: 18px;
+    }
+
+    .section-title {
+        font-size: 1.9rem;
+    }
+
+    .carousel-track {
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+
+    .carousel-dots {
+        margin-top: 5px;
+    }
+
+    .site-footer {
+        padding: 24px 0 28px;
+    }
+
+    .footer-contacts {
+        justify-content: flex-start;
+        gap: 10px 14px;
+    }
+
+    .footer-contact {
+        font-size: .82rem;
+    }
+
+    .footer-contact img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .lightbox {
+        padding: 14px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 760px) {
+    .carousel-arrows {
+        display: flex;
+    }
+
+    .offer-card {
+        flex-basis: 320px;
+    }
+
+    .review-card {
+        flex-basis: 300px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .section {
+        padding: 70px 0;
+    }
+
+    .hero-content {
+        padding-bottom: 92px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
     }
 }
