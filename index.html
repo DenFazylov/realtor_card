@@ -8,72 +8,57 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Tighter spacing between the main content blocks */
-        .section {
-            padding: 65px 0;
-        }
-
-        @media (max-width: 920px) {
-            .section {
-                padding: 52px 0;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .section {
-                padding: 44px 0;
-            }
-
-            .hero-links {
-                flex-wrap: wrap;
-                column-gap: 10px;
-                row-gap: 8px;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .section {
-                padding: 90px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css?v=4">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-031MN42DJV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-031MN42DJV');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-031MN42DJV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-031MN42DJV');
+    </script>
 </head>
 <body>
-
-    <!-- Hero section -->
     <header class="hero">
         <div class="hero-bg"></div>
         <div class="overlay"></div>
         <div class="hero-content">
-            <!--<div class="hero-label">Риелтор по загородной недвижимости</div>-->
             <h1>Галия Рафикова</h1>
             <p class="hero-text">Помогаю подобрать недвижимость<br>и сопровождаю сделку<br>на каждом этапе.</p>
-            <div class="hero-links">
+
+            <div class="hero-contacts" aria-label="Рабочие контакты">
+                <div class="hero-socials">
+                    <a class="quick-contact" href="https://t.me/poyushchiy_riyeltor" target="_blank" rel="noopener noreferrer" aria-label="Telegram-канал Поющий риэлтор">
+                        <img src="assets/TG.svg" alt="">
+                    </a>
+                    <a class="quick-contact" href="https://vk.ru/rieltor_ufa_galiya" target="_blank" rel="noopener noreferrer" aria-label="Сообщество ВКонтакте">
+                        <img src="assets/VK.svg" alt="">
+                    </a>
+                    <a class="quick-contact" href="https://www.instagram.com/poyushchiy_rieltor?igsh=ZHA2aWFreW03Mzc0" target="_blank" rel="noopener noreferrer" aria-label="Рабочий Instagram">
+                        <img src="assets/Inst.svg" alt="">
+                    </a>
+                    <a class="quick-contact" href="https://max.ru/channel_poyushchiy_rieltor" target="_blank" rel="noopener noreferrer" aria-label="MAX-канал Поющий риэлтор">
+                        <img src="assets/Max.svg" alt="">
+                    </a>
+                </div>
+                <a class="hero-phone" href="tel:+79613612350" aria-label="Позвонить +7 961 361-23-50">
+                    <img src="assets/Call.svg" alt="">
+                    <span>+7 (961) 361-23-50</span>
+                </a>
+            </div>
+
+            <nav class="hero-links" aria-label="Навигация по странице">
                 <a href="#about">Обо мне</a>
-                <span>•</span>
-                <a href="#contacts">Контакты</a>
                 <span>•</span>
                 <a href="#offers">Предложения</a>
                 <span>•</span>
-                <a href="https://vk.ru/album-240409354_309946072" target="_blank" rel="noopener noreferrer">Отзывы</a>
-            </div>
+                <a href="#reviews">Отзывы</a>
+            </nav>
         </div>
-        <a href="#about" class="scroll-down"><span></span></a>
+        <a href="#about" class="scroll-down" aria-label="Перейти к разделу Обо мне"><span></span></a>
     </header>
 
     <main>
-        <!-- About section -->
         <section class="about section" id="about">
             <div class="container">
                 <div class="about-grid">
@@ -92,81 +77,64 @@
             </div>
         </section>
 
-        <!-- Contacts section -->
-        <section class="contacts section" id="contacts">
-            <div class="container">
-                <div class="section-title">Выберите удобный способ связи</div>
-                <div class="contact-table">
-                    <!-- Telegram row: personal and channel -->
-                    <div class="contact-row">
-                        <div class="contact-item">
-                            <a href="https://t.me/GaliyaRM"><img src="assets/TG.svg" alt"Telegram" class="icon-svg"></a>
-                            <span class="label">Личный</span>
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://t.me/poyushchiy_riyeltor"><img src="assets/TG.svg" alt"Telegram" class="icon-svg"></a>
-                            <span class="label">Канал</span>
-                        </div>
-                    </div>
-                    <!-- VK row: personal and community -->
-                    <div class="contact-row">
-                        <div class="contact-item">
-                            <a href="https://vk.ru/ggaliyaaa"><img src="assets/VK.svg" alt"VK" class="icon-svg"></a>
-                            <span class="label">Личный</span>
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://vk.ru/rieltor_ufa_galiya">
-                                <img src="assets/VK.svg" alt="VK">
-                            </a>
-                            <span class="label">Сообщество</span>
-                        </div>
-                    </div>
-                    <!-- Instagram row -->
-                    <div class="contact-row">
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/ggaliyaaa?igsh=MXNuMW1iaDBhY3Rzcg=="><img src="assets/Inst.svg" alt"Instagram" class="icon-svg"></a>
-                            <span class="label">Личный</span>
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/poyushchiy_rieltor?igsh=ZHA2aWFreW03Mzc0">
-                                <img src="assets/Inst.svg" alt="Instagram">
-                            </a>
-                            <span class="label">Рабочий</span>
-                        </div>
-                    </div>
-                    <!-- MAX row: personal and channel -->
-                    <div class="contact-row">
-                        <div class="contact-item">
-                            <a href="https://max.ru/u/f9LHodD0cOJs8bDot6zWqqM2GcvlNwdci64rHVPTE4IN353moFvcKbAG3RU"><img src="assets/Max.svg" alt"Max" class="icon-svg"></a>
-                            <span class="label">Личный</span>
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://max.ru/channel_poyushchiy_rieltor"><img src="assets/Max.svg" alt"Max" class="icon-svg"></a>
-                            <span class="label">Канал</span>
-                        </div>
-                    </div>
-                    <!-- Телефон row: personal only -->
-                    <div class="contact-row">
-                        <div class="contact-item">
-                            <a href="tel:+79613612350"><img src="assets/Call.svg" alt"Call" class="icon-svg"></a>
-                            <span class="label">Позвонить</span>
-                        </div>
-                        <div class="contact-item"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Current offers section: populated automatically from Google Sheets CSV -->
         <section class="offers section" id="offers" hidden>
             <div class="container">
-                <div class="section-title">Актуальные предложения</div>
-                <div class="offers-grid" id="offers-grid" aria-live="polite"></div>
+                <div class="section-heading">
+                    <div class="section-title">Актуальные предложения</div>
+                    <div class="carousel-arrows" aria-label="Навигация по предложениям">
+                        <button class="carousel-arrow" id="offers-prev" type="button" aria-label="Предыдущее предложение">←</button>
+                        <button class="carousel-arrow" id="offers-next" type="button" aria-label="Следующее предложение">→</button>
+                    </div>
+                </div>
+                <div class="carousel-track offers-track" id="offers-track" aria-live="polite" aria-label="Актуальные предложения"></div>
+                <div class="carousel-dots" id="offers-dots" aria-label="Переключение предложений"></div>
             </div>
         </section>
 
+        <section class="reviews section" id="reviews" hidden>
+            <div class="container">
+                <div class="section-heading">
+                    <div class="section-title">Отзывы</div>
+                    <div class="carousel-arrows" aria-label="Навигация по отзывам">
+                        <button class="carousel-arrow" id="reviews-prev" type="button" aria-label="Предыдущий отзыв">←</button>
+                        <button class="carousel-arrow" id="reviews-next" type="button" aria-label="Следующий отзыв">→</button>
+                    </div>
+                </div>
+                <div class="carousel-track reviews-track" id="reviews-track" aria-label="Отзывы клиентов"></div>
+                <div class="carousel-dots" id="reviews-dots" aria-label="Переключение отзывов"></div>
+            </div>
+        </section>
     </main>
-    <script src="script.js"></script>
-    <script src="offers.js?v=3"></script>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-contacts" aria-label="Контакты">
+                <a class="footer-contact" href="https://t.me/poyushchiy_riyeltor" target="_blank" rel="noopener noreferrer" aria-label="Telegram-канал Поющий риэлтор">
+                    <img src="assets/TG.svg" alt="">
+                </a>
+                <a class="footer-contact" href="https://vk.ru/rieltor_ufa_galiya" target="_blank" rel="noopener noreferrer" aria-label="Сообщество ВКонтакте">
+                    <img src="assets/VK.svg" alt="">
+                </a>
+                <a class="footer-contact" href="https://www.instagram.com/poyushchiy_rieltor?igsh=ZHA2aWFreW03Mzc0" target="_blank" rel="noopener noreferrer" aria-label="Рабочий Instagram">
+                    <img src="assets/Inst.svg" alt="">
+                </a>
+                <a class="footer-contact" href="https://max.ru/channel_poyushchiy_rieltor" target="_blank" rel="noopener noreferrer" aria-label="MAX-канал Поющий риэлтор">
+                    <img src="assets/Max.svg" alt="">
+                </a>
+                <a class="footer-contact footer-phone" href="tel:+79613612350" aria-label="Позвонить +7 961 361-23-50">
+                    <img src="assets/Call.svg" alt=""><span>+7 (961) 361-23-50</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="review-lightbox" hidden role="dialog" aria-modal="true" aria-label="Увеличенный отзыв">
+        <button class="lightbox-close" id="review-lightbox-close" type="button" aria-label="Закрыть">×</button>
+        <img class="lightbox-image" id="review-lightbox-image" src="" alt="Отзыв клиента">
+    </div>
+
+    <script src="script.js?v=4"></script>
+    <script src="offers.js?v=4"></script>
+    <script src="reviews.js?v=1"></script>
 </body>
 </html>
