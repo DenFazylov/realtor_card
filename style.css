@@ -1,3 +1,8 @@
+/*
+ * Global Stylesheet for the personal portfolio website.
+ * Compact mobile-first version with horizontal carousels.
+ */
+
 :root {
     --bg: #f7f5f2;
     --surface: #ffffff;
@@ -40,8 +45,9 @@ a {
     text-decoration: none;
 }
 
-button {
-    font: inherit;
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 .container {
@@ -50,9 +56,9 @@ button {
 }
 
 .section {
-    padding: 54px 0;
+    padding: 56px 0;
     opacity: 0;
-    transform: translateY(34px);
+    transform: translateY(32px);
     transition: opacity .7s ease, transform .7s ease;
 }
 
@@ -61,10 +67,8 @@ button {
     transform: none;
 }
 
-/* Hero */
 .hero {
     position: relative;
-    min-height: 100vh;
     min-height: 100svh;
     display: flex;
     align-items: flex-end;
@@ -83,7 +87,7 @@ button {
 .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, .66), rgba(0, 0, 0, .30), rgba(0, 0, 0, .12));
+    background: linear-gradient(to top, rgba(0, 0, 0, .66), rgba(0, 0, 0, .30), rgba(0, 0, 0, .10));
 }
 
 .hero-content {
@@ -91,12 +95,12 @@ button {
     z-index: 2;
     width: min(92%, var(--container));
     margin: 0 auto;
-    padding: 52px 0 76px;
+    padding: 46px 0 78px;
     color: #fff;
 }
 
 .hero h1 {
-    font-size: clamp(46px, 9vw, 88px);
+    font-size: clamp(46px, 9vw, 86px);
     line-height: 1.05;
     font-weight: 300;
     margin-bottom: 24px;
@@ -113,8 +117,8 @@ button {
     margin-top: 24px;
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-wrap: wrap;
+    gap: 12px;
 }
 
 .hero-socials {
@@ -122,65 +126,59 @@ button {
     gap: 8px;
 }
 
-.quick-contact,
-.hero-phone {
-    background: rgba(255, 255, 255, .14);
-    border: 1px solid rgba(255, 255, 255, .18);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: background var(--transition), transform var(--transition);
+.quick-contact {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .12);
+    backdrop-filter: blur(6px);
+    transition: transform var(--transition), background var(--transition);
 }
 
-.quick-contact {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
+.quick-contact:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, .20);
 }
 
 .quick-contact img {
-    width: 40px;
-    height: 40px;
-    flex: none;
+    width: 42px;
+    height: 42px;
 }
 
 .hero-phone {
-    min-height: 40px;
+    min-height: 42px;
     border-radius: 999px;
+    padding: 0 13px 0 5px;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 4px 13px 4px 4px;
-    font-size: .92rem;
+    gap: 8px;
+    background: rgba(255, 255, 255, .12);
+    backdrop-filter: blur(6px);
+    font-size: .9rem;
     white-space: nowrap;
 }
 
 .hero-phone img {
     width: 32px;
     height: 32px;
-    flex: none;
     border-radius: 50%;
 }
 
-.quick-contact:hover,
-.hero-phone:hover {
-    background: rgba(255, 255, 255, .23);
-    transform: translateY(-2px);
-}
-
 .hero-links {
-    margin-top: 26px;
+    margin-top: 28px;
     display: flex;
     align-items: center;
-    gap: 16px;
     flex-wrap: wrap;
-    font-size: .96rem;
+    gap: 12px;
+    font-size: .95rem;
 }
 
 .hero-links span {
-    opacity: .5;
+    opacity: .45;
 }
 
 .hero-links a {
@@ -191,11 +189,11 @@ button {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -5px;
+    bottom: -6px;
     width: 0;
     height: 1px;
-    background: #fff;
-    transition: width var(--transition);
+    background: white;
+    transition: var(--transition);
 }
 
 .hero-links a:hover::after {
@@ -204,17 +202,17 @@ button {
 
 .scroll-down {
     position: absolute;
-    bottom: 22px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
 }
 
 .scroll-down span {
-    width: 24px;
-    height: 38px;
+    width: 25px;
+    height: 40px;
     display: block;
-    border: 2px solid rgba(255, 255, 255, .75);
+    border: 2px solid rgba(255, 255, 255, .76);
     border-radius: 30px;
     position: relative;
 }
@@ -227,12 +225,11 @@ button {
     border-radius: 50%;
     position: absolute;
     left: 50%;
-    top: 7px;
+    top: 8px;
     transform: translateX(-50%);
     animation: wheel 2s infinite;
 }
 
-/* About */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 420px;
@@ -244,8 +241,8 @@ button {
     font-size: 1.08rem;
 }
 
-.about-text p + p {
-    margin-top: 10px;
+.about-text p {
+    margin-bottom: 10px;
 }
 
 .video-card {
@@ -262,40 +259,39 @@ button {
 }
 
 .video-caption {
-    padding: 8px 10px;
+    padding: 7px;
     text-align: center;
-    font-size: .96rem;
+    font-size: 1rem;
 }
 
 .video-caption span {
     color: var(--text-light);
 }
 
-/* Shared section headings */
 .section-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .section-title {
-    font-size: clamp(30px, 5vw, 42px);
+    font-size: clamp(30px, 5vw, 40px);
     font-weight: 300;
     line-height: 1.2;
     letter-spacing: -0.02em;
 }
 
-/* Carousel */
 .carousel-track {
     display: flex;
     gap: 16px;
     overflow-x: auto;
-    overscroll-behavior-x: contain;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    overscroll-behavior-inline: contain;
     -webkit-overflow-scrolling: touch;
     padding: 4px 2px 14px;
 }
@@ -357,7 +353,6 @@ button {
     background: var(--accent);
 }
 
-/* Offers */
 .offers[hidden],
 .reviews[hidden],
 .lightbox[hidden] {
@@ -454,7 +449,6 @@ button {
     transform: scale(.985);
 }
 
-/* Reviews */
 .review-card {
     flex: 0 0 min(78vw, 300px);
     scroll-snap-align: start;
@@ -515,7 +509,6 @@ body.lightbox-open {
     overflow: hidden;
 }
 
-/* Footer */
 .site-footer {
     padding: 28px 0 34px;
     color: var(--text-light);
@@ -527,30 +520,37 @@ body.lightbox-open {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px 16px;
+    gap: 10px 12px;
 }
 
 .footer-contact {
+    min-width: 30px;
+    min-height: 30px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 7px;
     font-size: .86rem;
-    transition: color var(--transition);
+    transition: color var(--transition), opacity var(--transition);
 }
 
 .footer-contact:hover {
     color: var(--text);
+    opacity: .9;
 }
 
 .footer-contact img {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     flex: none;
     border-radius: 50%;
     opacity: .72;
 }
 
-/* Animations */
+.footer-phone {
+    padding-left: 4px;
+}
+
 @keyframes wheel {
     0% { opacity: 0; transform: translate(-50%, 0); }
     50% { opacity: 1; }
@@ -562,7 +562,6 @@ body.lightbox-open {
     to { transform: scale(1.08); }
 }
 
-/* Tablet */
 @media (max-width: 920px) {
     .section {
         padding: 48px 0;
@@ -580,7 +579,6 @@ body.lightbox-open {
     }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
     .hero-content {
         padding: 40px 0 70px;
@@ -661,8 +659,8 @@ body.lightbox-open {
     }
 
     .footer-contacts {
-        justify-content: flex-start;
-        gap: 10px 14px;
+        justify-content: center;
+        gap: 10px 12px;
     }
 
     .footer-contact {
@@ -670,8 +668,8 @@ body.lightbox-open {
     }
 
     .footer-contact img {
-        width: 22px;
-        height: 22px;
+        width: 24px;
+        height: 24px;
     }
 
     .lightbox {
@@ -679,7 +677,6 @@ body.lightbox-open {
     }
 }
 
-/* Desktop */
 @media (min-width: 760px) {
     .carousel-arrows {
         display: flex;
@@ -697,22 +694,5 @@ body.lightbox-open {
 @media (min-width: 1440px) {
     .section {
         padding: 70px 0;
-    }
-
-    .hero-content {
-        padding-bottom: 92px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
     }
 }
