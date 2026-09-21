@@ -62,8 +62,25 @@ window.initSnapCarousel = function initSnapCarousel({ track, dots, prev, next })
 
     let currentIndex = 0;
     let rafId = null;
+    let scrollable = false;
 
     const getCardLeft = index => cards[index].offsetLeft - cards[0].offsetLeft;
+
+    const syncLayout = () => {
+        track.style.paddingRight = '2px';
+
+        const lastCard = cards[cards.length - 1];
+        const naturalContentWidth = getCardLeft(cards.length - 1) + lastCard.offsetWidth;
+        scrollable = naturalContentWidth > track.clientWidth + 2;
+
+        if (scrollable) {
+            const endSpace = Math.max(track.clientWidth - lastCard.offsetWidth, 2);
+            track.style.paddingRight = `${endSpace}px`;
+        }
+
+        if (prev) prev.hidden = !scrollable;
+        if (next) next.hidden = !scrollable;
+    };
 
     const nearestIndex = () => {
         let bestIndex = 0;
@@ -91,8 +108,8 @@ window.initSnapCarousel = function initSnapCarousel({ track, dots, prev, next })
             });
         }
 
-        if (prev) prev.disabled = currentIndex === 0;
-        if (next) next.disabled = currentIndex === cards.length - 1;
+        if (prev) prev.disabled = !scrollable || currentIndex === 0;
+        if (next) next.disabled = !scrollable || currentIndex === cards.length - 1;
     };
 
     const scrollToIndex = index => {
@@ -113,6 +130,8 @@ window.initSnapCarousel = function initSnapCarousel({ track, dots, prev, next })
         });
     }
 
+    syncLayout();
+
     track.addEventListener('scroll', () => {
         if (rafId) cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(() => updateUi(nearestIndex()));
@@ -122,7 +141,10 @@ window.initSnapCarousel = function initSnapCarousel({ track, dots, prev, next })
     if (next) next.addEventListener('click', () => scrollToIndex(currentIndex + 1));
 
     window.addEventListener('resize', () => {
-        requestAnimationFrame(() => updateUi(nearestIndex()));
+        requestAnimationFrame(() => {
+            syncLayout();
+            updateUi(nearestIndex());
+        });
     }, { passive: true });
 
     updateUi(0);
