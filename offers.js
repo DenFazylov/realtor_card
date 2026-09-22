@@ -4,11 +4,13 @@
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQapGesjuEieyilywgpOSdv9kKVBLjIn_Ebzemsp8MTE9vBjIB5ML2L20xzyEamM_eY4KLlI1ltpkqP/pub?gid=0&single=true&output=csv';
 
     const section = document.getElementById('offers');
-    const grid = document.getElementById('offers-grid');
+    const track = document.getElementById('offers-track');
+    const dots = document.getElementById('offers-dots');
+    const prev = document.getElementById('offers-prev');
+    const next = document.getElementById('offers-next');
 
-    if (!section || !grid) return;
+    if (!section || !track) return;
 
-    // Small CSV parser with support for commas, quotes and line breaks inside quoted cells.
     function parseCsv(text) {
         const rows = [];
         let row = [];
@@ -17,10 +19,10 @@
 
         for (let i = 0; i < text.length; i++) {
             const char = text[i];
-            const next = text[i + 1];
+            const nextChar = text[i + 1];
 
             if (quoted) {
-                if (char === '"' && next === '"') {
+                if (char === '"' && nextChar === '"') {
                     field += '"';
                     i++;
                 } else if (char === '"') {
@@ -155,10 +157,15 @@
 
             const fragment = document.createDocumentFragment();
             offers.forEach(item => fragment.appendChild(createOfferCard(item)));
-            grid.replaceChildren(fragment);
+            track.replaceChildren(fragment);
+
             section.hidden = false;
+            section.classList.add('show');
+
+            if (typeof window.initSnapCarousel === 'function') {
+                window.initSnapCarousel({ track, dots, prev, next });
+            }
         } catch (error) {
-            // The offers block stays hidden; the rest of the site keeps working.
             console.warn('Не удалось загрузить актуальные предложения:', error);
         }
     }
