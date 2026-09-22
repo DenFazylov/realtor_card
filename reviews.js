@@ -26,7 +26,7 @@
 
     async function findReviewImage(index) {
         for (const extension of EXTENSIONS) {
-            const url = `assets/reviews/review-${index}.${extension}`;
+            const url = `assets/reviews/${index}.${extension}`;
             const result = await probeImage(url);
             if (result) return result;
         }
