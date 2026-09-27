@@ -5,7 +5,7 @@
 
     const polishStyles = document.createElement('link');
     polishStyles.rel = 'stylesheet';
-    polishStyles.href = 'concept-polish.css?v=2';
+    polishStyles.href = 'concept-polish.css?v=3';
     document.head.appendChild(polishStyles);
 
     function initMenu() {
@@ -23,14 +23,8 @@
             if (label) label.textContent = open ? 'Закрыть' : 'Меню';
         };
 
-        button.addEventListener('click', () => {
-            setOpen(!document.body.classList.contains('menu-open'));
-        });
-
-        panel.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => setOpen(false));
-        });
-
+        button.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
+        panel.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
         document.addEventListener('keydown', event => {
             if (event.key === 'Escape' && document.body.classList.contains('menu-open')) {
                 setOpen(false);
@@ -91,69 +85,64 @@
             scheduled = true;
             requestAnimationFrame(render);
         }, { passive: true });
-
         render();
     }
 
-    /*
-     * Strong scroll-linked typography.
-     * Unlike the entrance reveal, these headings KEEP MOVING while the user scrolls
-     * and physically leave the viewport horizontally.
-     */
+    /* Deliberately strong, visible scroll-linked horizontal motion. */
     function initScrollDrivenTitles() {
-        if (reducedMotion) return;
-
+        const clamp = value => Math.max(0, Math.min(1, value));
         const targets = [];
-        const add = (element, direction = 1, strength = 1.15, start = 0.46) => {
+        const add = (element, direction, distanceVW = 135) => {
             if (!element) return;
             element.style.willChange = 'transform';
-            targets.push({ element, direction, strength, start });
+            targets.push({ element, direction, distanceVW });
         };
 
-        /* First screen: the whole name slides away as soon as the hero starts leaving. */
-        add(document.querySelector('.hero-name'), -1, 1.32, 0.60);
+        const heroName = document.querySelector('.hero-name');
+        add(heroName, -1, 145);
 
-        /* About: two lines split in opposite directions. */
         const aboutLines = document.querySelectorAll('.about-headline > span');
-        add(aboutLines[0], -1, 1.20, 0.48);
-        add(aboutLines[1], 1, 1.20, 0.48);
+        add(aboutLines[0], -1, 130);
+        add(aboutLines[1], 1, 130);
 
-        /* Video heading. */
-        add(document.querySelector('.intro-video-copy h2'), -1, 1.10, 0.46);
-
-        /* Offers and reviews go in opposite directions. */
-        add(document.querySelector('#offers .section-heading-concept h2'), -1, 1.24, 0.48);
-        add(document.querySelector('#reviews .section-heading-concept h2'), 1, 1.24, 0.48);
+        add(document.querySelector('.intro-video-copy h2'), -1, 130);
+        add(document.querySelector('#offers .section-heading-concept h2'), -1, 140);
+        add(document.querySelector('#reviews .section-heading-concept h2'), 1, 140);
+        add(document.querySelector('.quote-band p'), -1, 115);
 
         if (!targets.length) return;
 
         let raf = 0;
-
-        const clamp = value => Math.max(0, Math.min(1, value));
-        const easeIn = value => value * value;
-
         const render = () => {
             const vh = window.innerHeight || 1;
             const vw = window.innerWidth || 1;
 
             targets.forEach(target => {
-                const rect = target.element.getBoundingClientRect();
-                const center = rect.top + rect.height * 0.5;
+                let progress = 0;
 
-                /*
-                 * Motion starts when the heading reaches roughly the middle of the screen.
-                 * By the time it approaches the top, it has travelled more than one viewport
-                 * width, so the text is unmistakably outside the visible area.
-                 */
-                const startY = vh * target.start;
-                const finishY = -Math.max(rect.height * 0.35, vh * 0.08);
-                const progress = clamp((startY - center) / Math.max(1, startY - finishY));
-                const distance = easeIn(progress) * vw * target.strength * target.direction;
-
-                if (target.element.classList.contains('hero-name')) {
-                    target.element.style.transform = `translate3d(${distance}px, -48%, 0)`;
+                if (target.element === heroName) {
+                    /* On the first screen the name starts moving immediately. */
+                    progress = clamp(window.scrollY / (vh * 0.62));
                 } else {
-                    target.element.style.transform = `translate3d(${distance}px, 0, 0)`;
+                    /*
+                     * Start while the heading is still low in the viewport (88% height)
+                     * and finish while it is still visibly on screen (24% height).
+                     * This makes the sideways departure impossible to miss.
+                     */
+                    const rect = target.element.getBoundingClientRect();
+                    const startY = vh * 0.88;
+                    const endY = vh * 0.24;
+                    progress = clamp((startY - rect.top) / Math.max(1, startY - endY));
+                }
+
+                /* Smooth but aggressive travel: over one full viewport width. */
+                const eased = 1 - Math.pow(1 - progress, 2.2);
+                const x = eased * vw * (target.distanceVW / 100) * target.direction;
+
+                if (target.element === heroName) {
+                    target.element.style.transform = `translate3d(${x}px, -48%, 0)`;
+                } else {
+                    target.element.style.transform = `translate3d(${x}px, 0, 0)`;
                 }
             });
 
@@ -188,14 +177,12 @@
 
     window.initSnapCarousel = function initSnapCarousel({ track, dots, prev, next }) {
         if (!track) return null;
-
         const cards = Array.from(track.children);
         if (!cards.length) return null;
 
         let currentIndex = 0;
         let scrollRaf = null;
         let scrollable = false;
-
         const cardLeft = index => cards[index].offsetLeft - cards[0].offsetLeft;
 
         const syncLayout = () => {
@@ -203,12 +190,10 @@
             const last = cards[cards.length - 1];
             const naturalWidth = cardLeft(cards.length - 1) + last.offsetWidth;
             scrollable = naturalWidth > track.clientWidth + 3;
-
             if (scrollable) {
                 const endSpace = Math.max(track.clientWidth - last.offsetWidth, 2);
                 track.style.paddingRight = `${endSpace}px`;
             }
-
             if (prev) prev.hidden = !scrollable;
             if (next) next.hidden = !scrollable;
         };
@@ -228,7 +213,6 @@
 
         const updateUi = index => {
             currentIndex = Math.max(0, Math.min(index, cards.length - 1));
-
             if (dots) {
                 dots.querySelectorAll('.carousel-dot').forEach((dot, dotIndex) => {
                     const active = dotIndex === currentIndex;
@@ -236,17 +220,13 @@
                     dot.setAttribute('aria-current', active ? 'true' : 'false');
                 });
             }
-
             if (prev) prev.disabled = !scrollable || currentIndex === 0;
             if (next) next.disabled = !scrollable || currentIndex === cards.length - 1;
         };
 
         const scrollToIndex = index => {
             const safeIndex = Math.max(0, Math.min(index, cards.length - 1));
-            track.scrollTo({
-                left: cardLeft(safeIndex),
-                behavior: reducedMotion ? 'auto' : 'smooth'
-            });
+            track.scrollTo({ left: cardLeft(safeIndex), behavior: reducedMotion ? 'auto' : 'smooth' });
             updateUi(safeIndex);
         };
 
@@ -264,15 +244,12 @@
 
         syncLayout();
         updateUi(0);
-
         track.addEventListener('scroll', () => {
             if (scrollRaf) cancelAnimationFrame(scrollRaf);
             scrollRaf = requestAnimationFrame(() => updateUi(nearestIndex()));
         }, { passive: true });
-
         prev?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
         next?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
-
         window.addEventListener('resize', () => {
             requestAnimationFrame(() => {
                 syncLayout();
