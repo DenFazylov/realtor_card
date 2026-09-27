@@ -14,7 +14,6 @@
         if (!button || !panel) return;
 
         const label = button.querySelector('.menu-toggle-label');
-
         const setOpen = open => {
             document.body.classList.toggle('menu-open', open);
             button.setAttribute('aria-expanded', String(open));
@@ -72,86 +71,80 @@
         const hero = document.querySelector('.concept-hero');
         if (!image || !hero) return;
 
-        let scheduled = false;
+        let raf = 0;
         const render = () => {
             const rect = hero.getBoundingClientRect();
             const progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)));
             image.style.transform = `translate3d(0, ${progress * 7}%, 0) scale(${1.04 + progress * .035})`;
-            scheduled = false;
+            raf = 0;
+        };
+        const requestRender = () => {
+            if (!raf) raf = requestAnimationFrame(render);
         };
 
-        window.addEventListener('scroll', () => {
-            if (scheduled) return;
-            scheduled = true;
-            requestAnimationFrame(render);
-        }, { passive: true });
+        window.addEventListener('scroll', requestRender, { passive: true });
+        window.addEventListener('resize', requestRender, { passive: true });
         render();
     }
 
-    /* Deliberately strong, visible scroll-linked horizontal motion. */
     function initScrollDrivenTitles() {
+        if (reducedMotion) return;
+
         const clamp = value => Math.max(0, Math.min(1, value));
-        const targets = [];
-        const add = (element, direction, distanceVW = 135) => {
-            if (!element) return;
-            element.style.willChange = 'transform';
-            targets.push({ element, direction, distanceVW });
-        };
+        const smoothstep = value => value * value * (3 - 2 * value);
 
-        const heroName = document.querySelector('.hero-name');
-        add(heroName, -1, 145);
+        const configs = [
+            { element: document.querySelector('.hero-name'), anchor: document.querySelector('.concept-hero'), direction: -1, hero: true },
+            { element: document.querySelector('.about-headline > span:first-child'), anchor: document.querySelector('.about-headline'), direction: -1 },
+            { element: document.querySelector('.about-headline > span:last-child'), anchor: document.querySelector('.about-headline'), direction: 1 },
+            { element: document.querySelector('.intro-video-copy h2'), anchor: document.querySelector('.intro-video-block'), direction: -1 },
+            { element: document.querySelector('#offers .section-heading-concept h2'), anchor: document.querySelector('#offers'), direction: -1 },
+            { element: document.querySelector('#reviews .section-heading-concept h2'), anchor: document.querySelector('#reviews'), direction: 1 },
+            { element: document.querySelector('.quote-band p'), anchor: document.querySelector('.quote-band'), direction: -1 }
+        ].filter(item => item.element && item.anchor);
 
-        const aboutLines = document.querySelectorAll('.about-headline > span');
-        add(aboutLines[0], -1, 130);
-        add(aboutLines[1], 1, 130);
+        if (!configs.length) return;
 
-        add(document.querySelector('.intro-video-copy h2'), -1, 130);
-        add(document.querySelector('#offers .section-heading-concept h2'), -1, 140);
-        add(document.querySelector('#reviews .section-heading-concept h2'), 1, 140);
-        add(document.querySelector('.quote-band p'), -1, 115);
-
-        if (!targets.length) return;
+        configs.forEach(item => {
+            item.element.style.willChange = 'transform';
+            item.element.style.transition = 'none';
+        });
 
         let raf = 0;
+
         const render = () => {
-            const vh = window.innerHeight || 1;
-            const vw = window.innerWidth || 1;
+            const scrollY = window.scrollY;
+            const vh = Math.max(1, window.innerHeight);
+            const vw = Math.max(1, window.innerWidth);
 
-            targets.forEach(target => {
-                let progress = 0;
+            configs.forEach(item => {
+                if (item.anchor.hidden || item.anchor.offsetParent === null) return;
 
-                if (target.element === heroName) {
-                    /* On the first screen the name starts moving immediately. */
-                    progress = clamp(window.scrollY / (vh * 0.62));
+                let progress;
+                if (item.hero) {
+                    progress = clamp(scrollY / (vh * 0.82));
                 } else {
-                    /*
-                     * Start while the heading is still low in the viewport (88% height)
-                     * and finish while it is still visibly on screen (24% height).
-                     * This makes the sideways departure impossible to miss.
-                     */
-                    const rect = target.element.getBoundingClientRect();
-                    const startY = vh * 0.88;
-                    const endY = vh * 0.24;
-                    progress = clamp((startY - rect.top) / Math.max(1, startY - endY));
+                    const anchorRect = item.anchor.getBoundingClientRect();
+                    const anchorTop = anchorRect.top + scrollY;
+                    const start = anchorTop - vh * 0.72;
+                    const end = anchorTop + Math.min(anchorRect.height * 0.32, vh * 0.34);
+                    progress = clamp((scrollY - start) / Math.max(1, end - start));
                 }
 
-                /* Smooth but aggressive travel: over one full viewport width. */
-                const eased = 1 - Math.pow(1 - progress, 2.2);
-                const x = eased * vw * (target.distanceVW / 100) * target.direction;
+                const eased = smoothstep(progress);
+                const width = item.element.getBoundingClientRect().width;
+                const distance = (vw + width + 70) * eased * item.direction;
 
-                if (target.element === heroName) {
-                    target.element.style.transform = `translate3d(${x}px, -48%, 0)`;
-                } else {
-                    target.element.style.transform = `translate3d(${x}px, 0, 0)`;
-                }
+                item.element.style.transform = item.hero
+                    ? `translate3d(${distance}px, -48%, 0)`
+                    : `translate3d(${distance}px, 0, 0)`;
             });
 
             raf = 0;
         };
 
         const requestRender = () => {
-            if (raf) return;
-            raf = requestAnimationFrame(render);
+            if (!raf) raf = requestAnimationFrame(render);
         };
 
         window.addEventListener('scroll', requestRender, { passive: true });
@@ -244,12 +237,14 @@
 
         syncLayout();
         updateUi(0);
+
         track.addEventListener('scroll', () => {
             if (scrollRaf) cancelAnimationFrame(scrollRaf);
             scrollRaf = requestAnimationFrame(() => updateUi(nearestIndex()));
         }, { passive: true });
         prev?.addEventListener('click', () => scrollToIndex(currentIndex - 1));
         next?.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+
         window.addEventListener('resize', () => {
             requestAnimationFrame(() => {
                 syncLayout();
