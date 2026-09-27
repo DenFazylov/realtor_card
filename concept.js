@@ -3,6 +3,11 @@
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    const polishStyles = document.createElement('link');
+    polishStyles.rel = 'stylesheet';
+    polishStyles.href = 'concept-polish.css?v=2';
+    document.head.appendChild(polishStyles);
+
     function initMenu() {
         const button = document.getElementById('menu-toggle');
         const panel = document.getElementById('menu-panel');
