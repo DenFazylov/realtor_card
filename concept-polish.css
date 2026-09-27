@@ -34,7 +34,7 @@
     letter-spacing: -.055em !important;
 }
 
-/* Make scroll reveals clearly readable as motion, not just a fade. */
+/* Entrance reveals remain, but the large headings below are also tied directly to scroll. */
 .reveal {
     opacity: 0 !important;
     transform: translate3d(0, 72px, 0) !important;
@@ -55,7 +55,6 @@
     filter: blur(0);
 }
 
-/* Small labels enter from the side; big headings rise up. */
 .section-eyebrow.reveal,
 .footer-kicker.reveal {
     transform: translate3d(-58px, 0, 0) !important;
@@ -94,10 +93,106 @@
     clip-path: inset(0 0 0 0);
 }
 
-/* A little stagger within story blocks so the page feels composed while scrolling. */
 .about-story .reveal:nth-child(1) { transition-delay: .03s !important; }
 .about-story .reveal:nth-child(2) { transition-delay: .11s !important; }
 .about-story .reveal:nth-child(3) { transition-delay: .18s !important; }
+
+/*
+ * REAL scroll-driven headline motion.
+ * These are not one-shot entrance animations: progress is controlled by the scrollbar.
+ * By the time each heading leaves its section, it has travelled well beyond the viewport.
+ */
+@keyframes heroScrollLeft {
+    0%   { transform: translate3d(0, -48%, 0); }
+    20%  { transform: translate3d(0, -48%, 0); }
+    100% { transform: translate3d(-175vw, -48%, 0); }
+}
+
+@keyframes scrollHardLeft {
+    0%   { transform: translate3d(0, 0, 0); }
+    25%  { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-165vw, 0, 0); }
+}
+
+@keyframes scrollHardRight {
+    0%   { transform: translate3d(0, 0, 0); }
+    25%  { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(165vw, 0, 0); }
+}
+
+@supports (animation-timeline: view()) {
+    /* Hero name moves out during the first part of the page scroll. */
+    .hero-name {
+        animation-name: heroScrollLeft !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: scroll(root block) !important;
+        animation-range: 0% 18% !important;
+        will-change: transform;
+    }
+
+    /* The two about lines visibly split apart. */
+    .about-headline > span:first-child {
+        animation-name: scrollHardLeft !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 10% exit 75% !important;
+        will-change: transform;
+    }
+
+    .about-headline > span:last-child {
+        animation-name: scrollHardRight !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 10% exit 75% !important;
+        will-change: transform;
+    }
+
+    .intro-video-copy h2 {
+        animation-name: scrollHardLeft !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 10% exit 78% !important;
+        will-change: transform;
+    }
+
+    #offers .section-heading-concept h2 {
+        animation-name: scrollHardLeft !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 10% exit 78% !important;
+        will-change: transform;
+    }
+
+    #reviews .section-heading-concept h2 {
+        animation-name: scrollHardRight !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 10% exit 78% !important;
+        will-change: transform;
+    }
+
+    .quote-band p {
+        animation-name: scrollHardLeft !important;
+        animation-duration: 1ms !important;
+        animation-timing-function: linear !important;
+        animation-fill-mode: both !important;
+        animation-timeline: view(block) !important;
+        animation-range: entry 0% exit 90% !important;
+        will-change: transform;
+    }
+}
 
 @media (max-width: 640px) {
     .reveal {
@@ -121,6 +216,8 @@
     }
 }
 
+/* Keep accessibility behavior for the entrance fades, but intentionally do NOT disable
+   the explicit scroll-linked headline demo requested for this test concept. */
 @media (prefers-reduced-motion: reduce) {
     .reveal,
     .reveal-left,
