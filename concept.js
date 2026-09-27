@@ -95,6 +95,81 @@
         render();
     }
 
+    /*
+     * Strong scroll-linked typography.
+     * Unlike the entrance reveal, these headings KEEP MOVING while the user scrolls
+     * and physically leave the viewport horizontally.
+     */
+    function initScrollDrivenTitles() {
+        if (reducedMotion) return;
+
+        const targets = [];
+        const add = (element, direction = 1, strength = 1.15, start = 0.46) => {
+            if (!element) return;
+            element.style.willChange = 'transform';
+            targets.push({ element, direction, strength, start });
+        };
+
+        /* First screen: the whole name slides away as soon as the hero starts leaving. */
+        add(document.querySelector('.hero-name'), -1, 1.32, 0.60);
+
+        /* About: two lines split in opposite directions. */
+        const aboutLines = document.querySelectorAll('.about-headline > span');
+        add(aboutLines[0], -1, 1.20, 0.48);
+        add(aboutLines[1], 1, 1.20, 0.48);
+
+        /* Video heading. */
+        add(document.querySelector('.intro-video-copy h2'), -1, 1.10, 0.46);
+
+        /* Offers and reviews go in opposite directions. */
+        add(document.querySelector('#offers .section-heading-concept h2'), -1, 1.24, 0.48);
+        add(document.querySelector('#reviews .section-heading-concept h2'), 1, 1.24, 0.48);
+
+        if (!targets.length) return;
+
+        let raf = 0;
+
+        const clamp = value => Math.max(0, Math.min(1, value));
+        const easeIn = value => value * value;
+
+        const render = () => {
+            const vh = window.innerHeight || 1;
+            const vw = window.innerWidth || 1;
+
+            targets.forEach(target => {
+                const rect = target.element.getBoundingClientRect();
+                const center = rect.top + rect.height * 0.5;
+
+                /*
+                 * Motion starts when the heading reaches roughly the middle of the screen.
+                 * By the time it approaches the top, it has travelled more than one viewport
+                 * width, so the text is unmistakably outside the visible area.
+                 */
+                const startY = vh * target.start;
+                const finishY = -Math.max(rect.height * 0.35, vh * 0.08);
+                const progress = clamp((startY - center) / Math.max(1, startY - finishY));
+                const distance = easeIn(progress) * vw * target.strength * target.direction;
+
+                if (target.element.classList.contains('hero-name')) {
+                    target.element.style.transform = `translate3d(${distance}px, -48%, 0)`;
+                } else {
+                    target.element.style.transform = `translate3d(${distance}px, 0, 0)`;
+                }
+            });
+
+            raf = 0;
+        };
+
+        const requestRender = () => {
+            if (raf) return;
+            raf = requestAnimationFrame(render);
+        };
+
+        window.addEventListener('scroll', requestRender, { passive: true });
+        window.addEventListener('resize', requestRender, { passive: true });
+        render();
+    }
+
     function initVideo() {
         const video = document.querySelector('.intro-video-shell video');
         if (!video) return;
@@ -107,6 +182,7 @@
         initAnchorScroll();
         initReveal();
         initHeroParallax();
+        initScrollDrivenTitles();
         initVideo();
     });
 
