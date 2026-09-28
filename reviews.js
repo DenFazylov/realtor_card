@@ -13,6 +13,7 @@
     if (!section || !track) return;
 
     const MAX_REVIEWS = 30;
+    const MAX_CONSECUTIVE_MISSES = 4;
     const EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
 
     function probeImage(url) {
@@ -35,10 +36,18 @@
 
     async function discoverReviews() {
         const urls = [];
+        let consecutiveMisses = 0;
 
         for (let index = 1; index <= MAX_REVIEWS; index++) {
             const url = await findReviewImage(index);
-            if (!url) break;
+
+            if (!url) {
+                consecutiveMisses += 1;
+                if (consecutiveMisses >= MAX_CONSECUTIVE_MISSES) break;
+                continue;
+            }
+
+            consecutiveMisses = 0;
             urls.push(url);
         }
 
